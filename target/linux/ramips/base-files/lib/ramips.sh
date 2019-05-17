@@ -280,6 +280,9 @@ ramips_board_detect() {
 	*"Mi Router 3G")
 		name="mir3g"
 		;;
+	*"Mi Router 4")
+		name="mir4"
+		;;		
 	*"MicroWRT")
 		name="microwrt"
 		;;
@@ -438,6 +441,9 @@ ramips_board_detect() {
 		;;
 	*"RT-AC51U")
 		name="rt-ac51u"
+		;;
+	*"RT-AC54U")
+		name="rt-ac54u"
 		;;
 	*"RT-G32 B1")
 		name="rt-g32-b1"

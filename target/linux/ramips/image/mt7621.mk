@@ -235,6 +235,22 @@ define Device/k2p
 endef
 TARGET_DEVICES += k2p
 
+define Device/xiaomi_mir3p
+  DTS := MIR3P
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  KERNEL_SIZE:= 4096k
+  UBINIZE_OPTS := -E 5
+  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  DEVICE_TITLE := Xiaomi Mi Router 3 Pro
+  IMAGES += factory.bin
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-ubi | check-size $$$$(IMAGE_SIZE)
+  DEVICE_PACKAGES := \
+	kmod-usb3 kmod-usb-ledtrig-usbport wpad-basic uboot-envtools
+endef
+TARGET_DEVICES += xiaomi_mir3p
+
 define Device/mir3g
   DTS := MIR3G
   BLOCKSIZE := 128k
@@ -253,6 +269,26 @@ define Device/mir3g
 	uboot-envtools
 endef
 TARGET_DEVICES += mir3g
+
+define Device/mir4
+  DTS := MIR4
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  KERNEL_SIZE := 4096k
+  IMAGE_SIZE := 32768k
+  UBINIZE_OPTS := -E 5
+  IMAGES += kernel1.bin rootfs0.bin factory.bin
+  IMAGE/kernel1.bin := append-kernel
+  IMAGE/rootfs0.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) |append-kernel | pad-to $$(KERNEL_SIZE)| append-ubi | check-size $$$$(IMAGE_SIZE)
+  DEVICE_TITLE := Xiaomi Mi Router 4
+  SUPPORTED_DEVICES += R4
+  DEVICE_PACKAGES := \
+	kmod-mt7603 kmod-mt76x2 kmod-usb3 wpad-basic \
+	uboot-envtools
+endef
+TARGET_DEVICES += mir4
 
 define Device/mt7621
   DTS := MT7621
